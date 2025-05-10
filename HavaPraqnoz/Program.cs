@@ -8,10 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRefitClient<IWeatherClient>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://api.weatherapi.com/v1/")); 
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://api.weatherapi.com/v1/"));
 
+builder.Services.AddCors(a =>
+{
+    a.AddPolicy("client", builder => 
+    {
+        builder.WithOrigins("http://localhost", "http://client", "http://localhost:5173")
+               .AllowCredentials()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
-
+app.UseCors("client");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
