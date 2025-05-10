@@ -34,7 +34,7 @@ app.MapGet("/search/{query}", async (string query, IWeatherClient weatherClient,
     return await weatherClient.SearchAsync(configuration["ApiKey"] ?? throw new NullReferenceException("API KEY IS NULL, PASS API KEY!"), query);
 });
 
-app.MapGet("/forcast/{id}", async (int id, IWeatherClient weatherClient, IConfiguration configuration) =>
+app.MapGet("/forecast/{id}", async (int id, IWeatherClient weatherClient, IConfiguration configuration) =>
 {
     return await weatherClient.GetAsync(configuration["ApiKey"] ?? throw new NullReferenceException("API KEY IS NULL, PASS API KEY!"), id);
 });
