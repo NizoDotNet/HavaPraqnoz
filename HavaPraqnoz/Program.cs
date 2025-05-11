@@ -10,11 +10,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRefitClient<IWeatherClient>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://api.weatherapi.com/v1/"));
 
+builder.Configuration.AddJsonFile("secret.json");
 builder.Services.AddCors(a =>
 {
     a.AddPolicy("client", builder => 
     {
-        builder.WithOrigins("http://localhost", "http://client", "http://localhost:5173")
+        builder.WithOrigins("http://localhost", "http://HavaPraqnoz.Front:3000", "http://localhost:5173")
                .AllowCredentials()
                .AllowAnyMethod()
                .AllowAnyHeader();
